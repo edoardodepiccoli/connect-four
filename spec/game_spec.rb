@@ -2,18 +2,31 @@ require "rspec"
 require_relative "../lib/game"
 
 describe Game do
-	let(:player_1) { double }
-	let(:player_2) { double }
-	subject(:game) { described_class.new(player_1, player_2) }
+	subject(:game) { described_class.new }
+	let(:p1) { double }
+	let(:p2) { double }
 
 	it "should exist" do
 		expect(game).not_to be_nil
 	end
 
-	describe "#initialize" do
-		it "should set player 1 to player 1 and player 2 to player 2" do
-			expect(game.instance_variable_get(:@player_1)).to eql(player_1)
-			expect(game.instance_variable_get(:@player_2)).to eql(player_2)
+	describe "#get_player_move" do
+		it "should display error once if first input is a letter and second is a number" do
+			allow(game).to receive(:gets).and_return("a", "1")
+			expect(game).to receive(:puts).once.with("invalid")
+			game.get_player_move
 		end
-	end
+
+		it "should display error twice if first two inputs are letters" do
+			allow(game).to receive(:gets).and_return("a", "b", "1")
+			expect(game).to receive(:puts).twice.with("invalid")
+			game.get_player_move
+		end
+
+		it "should not display error if first input is number" do
+			allow(game).to receive(:gets).and_return("2")
+			expect(game).not_to receive(:puts).with("invalid")
+			game.get_player_move
+		end
+	end	
 end
