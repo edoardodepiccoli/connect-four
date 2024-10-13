@@ -21,7 +21,7 @@ class Board
         string += item
       end
     end
-    puts string
+    puts string + "\n0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣"
   end
 
   def get_move_index(column)
